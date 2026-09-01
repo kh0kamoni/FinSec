@@ -1,4 +1,4 @@
-﻿# Bangladesh Bank MFS Cybersecurity Compliance & Machine Learning Framework
+# FinSec: Static Analysis of Android Binaries for Compliance Against Bangladesh Bank Cybersecurity Framework v1.0
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
@@ -89,8 +89,8 @@ flowchart TD
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/mfs_ml.git
-cd mfs_ml
+git clone https://github.com/kh0kamoni/FinSec.git
+cd FinSec
 
 # Create virtual environment
 python -m venv venv
@@ -197,8 +197,8 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 If you use this framework or empirical findings in your research, please cite:
 ```bibtex
-@article{mfs_bb_compliance2026,
-  title   = {Automated Regulatory Compliance for Mobile Financial Services: A Hybrid Static Analysis and Machine Learning Framework Grounded in Bangladesh Bank Guidelines},
+@article{finsec2026,
+  title   = {FinSec: Static Analysis of Android Binaries for Compliance Against Bangladesh Bank Cybersecurity Framework v1.0},
   author  = {Anonymous Author(s)},
   journal = {Proceedings of the International Conference on Networking, Systems and Security (NSysS)},
   year    = {2026}
