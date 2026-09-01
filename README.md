@@ -16,45 +16,50 @@ In February 2025, Bangladesh Bank issued its official **Cybersecurity Framework 
 * **Payment Service Providers (PSPs)** and **Payment System Operators (PSOs)**
 * **Scheduled Commercial Banks and NBFIs** (e.g., Islami Bank / mCash, Southeast Bank / TeleCash)
 
-This framework translates policy mandates into automated Dalvik bytecode and AndroidManifest verification rules, coupled with a **45-dimensional machine learning pipeline** tailored for bounded national application populations ($N \approx 12 - 25$).
+This framework translates policy mandates into automated Dalvik bytecode and AndroidManifest verification rules, computing a deterministic 0--100 **Cybersecurity Maturity Index (CMI)** and classifying applications into actionable central bank regulatory tiers.
 
 ```mermaid
 flowchart TD
     subgraph Input["Input Tier"]
-        APK["Android MFS APK"]
+        APK["Android MFS APK Binaries"]
     end
 
-    subgraph StaticCore["Static Auditing Engine (Androguard)"]
-        Parser["DEX and Manifest Parser"]
-        Rules["14 BB-MFS Verification Rules"]
-        ScoreCalc["0-100 Maturity Index Calculator"]
+    subgraph StaticCore["Static Program Analysis Core (Androguard)"]
+        Parser["Manifest and Multi-DEX Bytecode Parser"]
+        Taint["SAD Lexical and Parameter Taint Heuristics"]
+        Entropy["Shannon Entropy Secret Scanner"]
     end
 
-    subgraph MLPipeline["Machine Learning Pipeline"]
-        FE["45-Dimensional Multimodal Feature Extractor"]
-        LOOCV["Leave-One-Out Cross-Validation Pipeline"]
-        Regressor["Ridge Score Regressor (LOOCV R2 = 0.4258)"]
-        Anomaly["Isolation Forest Anomaly Triage"]
+    subgraph RegEngine["Regulatory Verification and Scoring Engine"]
+        Rules["14 Bangladesh Bank Rules (BB-MFS-01 to 14)"]
+        Penalty["Calibrated Penalty Schedule (Critical, High, Medium)"]
+        CMI["Cybersecurity Maturity Index (0-100 Score)"]
+        Tiers["Regulatory Tier Classification (Tier 1, 2, 3)"]
     end
 
-    subgraph Reporting["Reporting and Audit Tier"]
+    subgraph Baseline["Baseline Comparative Tier"]
+        MobSF["Generic SAST Coverage Matrix (MobSF Baseline)"]
+    end
+
+    subgraph Reporting["Auditing and Reporting Tier"]
         Console["Rich Color Terminal Dashboard"]
-        Markdown["BB Clause 8.1.3 Markdown Audit Report"]
+        Markdown["Clause 8.1.3 Markdown Audit Report"]
         JSON["Structured CI/CD and SIEM JSON"]
     end
 
     APK --> Parser
-    Parser --> Rules
-    Parser --> FE
-    Rules --> ScoreCalc
-    FE --> LOOCV
-    FE --> Regressor
-    FE --> Anomaly
-    ScoreCalc --> Console
-    ScoreCalc --> Markdown
-    ScoreCalc --> JSON
-    LOOCV --> Markdown
-    Anomaly --> Markdown
+    Parser --> Taint
+    Parser --> Entropy
+    Taint --> Rules
+    Entropy --> Rules
+    Rules --> Penalty
+    Penalty --> CMI
+    CMI --> Tiers
+    Rules --> MobSF
+    Tiers --> Console
+    Tiers --> Markdown
+    Tiers --> JSON
+    MobSF --> Markdown
 ```
 
 ---
