@@ -1,0 +1,599 @@
+{
+  "app_name": "Nagad",
+  "package_name": "com.konasl.nagad",
+  "version_name": "1.1.118.03",
+  "version_code": "1218",
+  "sha256_hash": "849f074b8af0a887a3d5b3cbfe87fc745d26690d3b74f508b57c22cfad5ba3cf",
+  "apk_size_mb": 55.34,
+  "maturity_score": 46.0,
+  "tier": "Tier 3: High Risk (Regulatory Action & Escalation Required)",
+  "summary": {
+    "total_rules": 14,
+    "passed_rules": 5,
+    "failed_rules": 4,
+    "warning_rules": 5,
+    "critical_violations": 1
+  },
+  "rule_results": [
+    {
+      "rule_id": "BB-MFS-01",
+      "clause": "4.1.5.2, 4.1.5.17, 4.1.5.23",
+      "title": "Encryption of Data at Rest & End-to-End Encryption (E2EE)",
+      "function": "PROTECT",
+      "category": "Data Security",
+      "status": "FAILED",
+      "severity": "CRITICAL",
+      "penalty": 15,
+      "remediation": "Migrate plaintext SharedPreferences and SQLiteDatabase to androidx.security.crypto.EncryptedSharedPreferences and net.sqlcipher.database.SQLiteDatabase.",
+      "details": "Violation of Clauses 4.1.5.2 and 4.1.5.17: Application uses unencrypted local storage.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "Detected standard unencrypted SharedPreferences or SQLiteDatabase without SQLCipher or EncryptedSharedPreferences.",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-02",
+      "clause": "4.1.3.21.b, 6.1.3.17.b, 4.1.1.6",
+      "title": "Prohibition of Logging Sensitive Authentication Data (SAD) & CHD",
+      "function": "PROTECT",
+      "category": "Identity Management & Access Control",
+      "status": "WARNING",
+      "severity": "CRITICAL",
+      "penalty": 2,
+      "remediation": "Strip all log calls in release builds (using ProGuard/R8) and ensure sensitive parameters are sanitized before entering logging sinks.",
+      "details": "Logging calls present in APK; no obvious plaintext credential log formats found.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "General android.util.Log calls detected; ensure R8/ProGuard strips them in production.",
+          "confidence": "LOW",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-03",
+      "clause": "4.1.5.19, 4.1.3.12",
+      "title": "Transport Security, Cleartext Prohibition & Certificate Pinning",
+      "function": "PROTECT",
+      "category": "Data Security & ICT Infrastructure",
+      "status": "PASSED",
+      "severity": "HIGH",
+      "penalty": 0,
+      "remediation": "Set cleartextTrafficPermitted='false' in network_security_config.xml and configure OkHttp CertificatePinner or network security config pin-set.",
+      "details": "Transport layer security compliant with Clause 4.1.5.19.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "Verified TLS enforcement and Certificate Pinning implementation.",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-04",
+      "clause": "4.1.5.19.c, 4.1.5.18",
+      "title": "Cryptographic Algorithm Strength & Modern Cipher Suites",
+      "function": "PROTECT",
+      "category": "Data Security",
+      "status": "FAILED",
+      "severity": "HIGH",
+      "penalty": 10,
+      "remediation": "Use AES-256 in GCM mode (or CBC with HMAC) and SHA-256/SHA-512 for cryptographic hashing.",
+      "details": "Violation of Clause 4.1.5.19.c: Found 10 insecure ciphers (e.g. DES, RC4, ECB).",
+      "findings_count": 10,
+      "findings": [
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DES",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DES",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DES/ECB/noPadding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DES/ECB/noPadding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DESede",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DESede",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DESede/CBC/noPadding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DESede/CBC/noPadding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: AES/ECB/PKCS5Padding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: AES/ECB/PKCS5Padding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DESede/CBC/PKCS5Padding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DESede/CBC/PKCS5Padding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: RC2",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: RC2",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: AES/ECB/NoPadding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: AES/ECB/NoPadding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DES/ECB/NoPadding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DES/ECB/NoPadding",
+          "metadata": {}
+        },
+        {
+          "description": "Insecure cipher algorithm detected: Insecure Cipher: DES/CBC/noPadding",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "Insecure Cipher: DES/CBC/noPadding",
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-05",
+      "clause": "4.1.5.18, 4.1.5.7",
+      "title": "Secure Hardware Cryptographic Key Storage",
+      "function": "PROTECT",
+      "category": "Data Security",
+      "status": "WARNING",
+      "severity": "CRITICAL",
+      "penalty": 5,
+      "remediation": "Generate and store master keys in AndroidKeyStore using KeyGenParameterSpec with PURPOSE_ENCRYPT | PURPOSE_DECRYPT.",
+      "details": "No AndroidKeyStore usage found in client binary.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "AndroidKeyStore not explicitly detected; verify if keys are stored in backend HSM.",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-06",
+      "clause": "4.1.3.10, 5.1.1.11",
+      "title": "Transaction Signing, Non-Repudiation & Anti-Replay Protection",
+      "function": "PROTECT & DETECT",
+      "category": "ICT Infrastructure & Anomalies",
+      "status": "PASSED",
+      "severity": "HIGH",
+      "penalty": 0,
+      "remediation": "Implement java.security.Signature with SHA256withRSA/ECDSA or javax.crypto.Mac with HmacSHA256 on all transaction payloads.",
+      "details": "Transaction non-repudiation & anti-replay controls verified per Clause 4.1.3.10.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "Verified transaction signing & payload integrity primitives: javax/crypto/Mac, java/security/Signature, HmacSHA256",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-07",
+      "clause": "4.1.5.18, 4.1.5.19",
+      "title": "Cryptographically Secure Pseudo-Random Number Generation (PRNG)",
+      "function": "PROTECT",
+      "category": "Data Security",
+      "status": "PASSED",
+      "severity": "MEDIUM",
+      "penalty": 0,
+      "remediation": "Replace all instances of java.util.Random or Math.random() in security-sensitive methods with java.security.SecureRandom.",
+      "details": "Complies with Clause 4.1.5.18: Secure pseudo-random number generator utilized.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "Verified java.security.SecureRandom usage for cryptographically secure randomness.",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-08",
+      "clause": "4.1.2.5, 4.1.8.4",
+      "title": "Principle of Least Privilege & Permission Baseline Adherence",
+      "function": "PROTECT",
+      "category": "Access Control & Protective Technology",
+      "status": "WARNING",
+      "severity": "MEDIUM",
+      "penalty": 2,
+      "remediation": "Ensure functional permissions (e.g. location for agent locator, contacts for recharge) declare explicit in-app runtime consent.",
+      "details": "Advisory under Clause 4.1.2.5: 4 functional permissions requested (READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION, READ_CONTACTS, WRITE_EXTERNAL_STORAGE).",
+      "findings_count": 4,
+      "findings": [
+        {
+          "description": "Functionally justified permission requiring operational governance: android.permission.READ_EXTERNAL_STORAGE",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {
+            "permission": "android.permission.READ_EXTERNAL_STORAGE"
+          }
+        },
+        {
+          "description": "Functionally justified permission requiring operational governance: android.permission.ACCESS_FINE_LOCATION",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {
+            "permission": "android.permission.ACCESS_FINE_LOCATION"
+          }
+        },
+        {
+          "description": "Functionally justified permission requiring operational governance: android.permission.READ_CONTACTS",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {
+            "permission": "android.permission.READ_CONTACTS"
+          }
+        },
+        {
+          "description": "Functionally justified permission requiring operational governance: android.permission.WRITE_EXTERNAL_STORAGE",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {
+            "permission": "android.permission.WRITE_EXTERNAL_STORAGE"
+          }
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-09",
+      "clause": "4.1.8.10, 4.1.8.6",
+      "title": "Hardened Baseline Manifest & Component Configuration",
+      "function": "PROTECT",
+      "category": "Protective Technology",
+      "status": "WARNING",
+      "severity": "HIGH",
+      "penalty": 5,
+      "remediation": "Set android:allowBackup='false', android:debuggable='false', and ensure all exported activities/receivers declare android:permission.",
+      "details": "Identified 8 unprotected exported application components.",
+      "findings_count": 5,
+      "findings": [
+        {
+          "description": "Exported component without permission barrier: activity:com.konasl.dfs.ui.deeplink.IntentForwardingActivity",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        },
+        {
+          "description": "Exported component without permission barrier: activity:com.sslwireless.sslcommerzlibrary.view.activity.MainUIActivitySSLC",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        },
+        {
+          "description": "Exported component without permission barrier: activity:com.facebook.CustomTabActivity",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        },
+        {
+          "description": "Exported component without permission barrier: activity:io.card.payment.CardIOActivity",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        },
+        {
+          "description": "Exported component without permission barrier: activity:io.card.payment.DataEntryActivity",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-10",
+      "clause": "4.1.4.4, 5.1.2.19",
+      "title": "Source Code Protection, Obfuscation & Anti-Tampering",
+      "function": "PROTECT & DETECT",
+      "category": "Preventing Unauthorized Software",
+      "status": "PASSED",
+      "severity": "MEDIUM",
+      "penalty": 0,
+      "remediation": "Enable ProGuard / R8 minification and DexGuard anti-tamper protections in build.gradle.",
+      "details": "Application source code obfuscation complies with Clause 4.1.4.4.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "Verified code minification/obfuscation (obfuscated class ratio: 31.2%).",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-11",
+      "clause": "Appendix C (Items 7, 8, 34)",
+      "title": "Embedded Credentials, Hardcoded API Secrets & Private Keys",
+      "function": "PROTECT",
+      "category": "Security of Hardware, Data & Records",
+      "status": "WARNING",
+      "severity": "HIGH",
+      "penalty": 5,
+      "remediation": "Move secrets to secure backend proxies or use dynamic token exchange with AndroidKeyStore protection.",
+      "details": "Potential embedded tokens identified via Shannon entropy heuristics.",
+      "findings_count": 3,
+      "findings": [
+        {
+          "description": "Suspicious high-entropy string constant (6.21 bits/char): ABC...)_+",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "ABC...)_+",
+          "metadata": {}
+        },
+        {
+          "description": "Suspicious high-entropy string constant (6.00 bits/char): ABC...9-_",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "ABC...9-_",
+          "metadata": {}
+        },
+        {
+          "description": "Suspicious high-entropy string constant (4.53 bits/char): acc...$cp",
+          "confidence": "MEDIUM",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "acc...$cp",
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-12",
+      "clause": "4.1.4.4, 5.1.2.19",
+      "title": "Root, Jailbreak & Execution Environment Integrity Detection",
+      "function": "PROTECT & DETECT",
+      "category": "System Security & Mobile Defense",
+      "status": "PASSED",
+      "severity": "HIGH",
+      "penalty": 0,
+      "remediation": "Implement active root detection (checking /system/bin/su, test-keys, Magisk, or RootBeer) and terminate session if compromised.",
+      "details": "Complies with Clause 4.1.4.4 & 5.1.2.19: Found 7 root/integrity detection indicators.",
+      "findings_count": 5,
+      "findings": [
+        {
+          "description": "Verified environment integrity check: detects 'isRooted'",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "isRooted",
+          "metadata": {}
+        },
+        {
+          "description": "Verified environment integrity check: detects 'eu.chainfire.supersu'",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "eu.chainfire.supersu",
+          "metadata": {}
+        },
+        {
+          "description": "Verified environment integrity check: detects 'com.topjohnwu.magisk'",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "com.topjohnwu.magisk",
+          "metadata": {}
+        },
+        {
+          "description": "Verified environment integrity check: detects '/system/xbin/su'",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "/system/xbin/su",
+          "metadata": {}
+        },
+        {
+          "description": "Verified environment integrity check: detects 'com.noshufou.android.su'",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": "com.noshufou.android.su",
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-13",
+      "clause": "4.1.8.6",
+      "title": "Screen Capture, Screenshot & Tapjacking Overlay Protection",
+      "function": "PROTECT",
+      "category": "Protective Technology",
+      "status": "FAILED",
+      "severity": "MEDIUM",
+      "penalty": 5,
+      "remediation": "Apply getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE) on sensitive payment activities.",
+      "details": "Violation of Clause 4.1.8.6: Missing protection against screen capture and tapjacking overlays.",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "No FLAG_SECURE or filterTouchesWhenObscured configurations identified in bytecode/manifest.",
+          "confidence": "HIGH",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "rule_id": "BB-MFS-14",
+      "clause": "4.1.3.21, 4.1.5.17",
+      "title": "Biometric Authentication Cryptographic Object Binding",
+      "function": "PROTECT",
+      "category": "Access Control & Cryptography",
+      "status": "FAILED",
+      "severity": "MEDIUM",
+      "penalty": 5,
+      "remediation": "Migrate to androidx.biometric.BiometricPrompt and authenticate via BiometricPrompt.CryptoObject backed by AndroidKeyStore.",
+      "details": "Missing modern biometric authentication framework (BiometricPrompt).",
+      "findings_count": 1,
+      "findings": [
+        {
+          "description": "No biometric authentication framework (BiometricPrompt) integrated.",
+          "confidence": "LOW",
+          "class_name": null,
+          "method_name": null,
+          "file_path": null,
+          "line_number": null,
+          "code_snippet": null,
+          "metadata": {}
+        }
+      ]
+    }
+  ],
+  "ml_risk_prediction": null,
+  "execution_time_seconds": 36.46
+}
