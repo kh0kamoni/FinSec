@@ -125,12 +125,49 @@ mfs-check batch path/to/apk_folder/ --output results/summary.csv
 python experiments/run_real_empirical_analysis.py
 ```
 
+#### Empirical ML Pipeline Outputs:
+
+* **Leave-One-Out Cross-Validation (LOOCV Ridge Regression on 12 Real Production Binaries)**:
+  * **$R^2$ Score**: `0.4258`
+  * **RMSE**: `8.17`
+  * **MAE**: `6.98`
+
+| Production Binary | Actual Maturity Score | LOOCV Predicted Score | Absolute Error ($|\Delta|$) |
+| :--- | :---: | :---: | :---: |
+| **bKash** | 73.0 | 64.3 | 8.7 |
+| **TeleCash** | 73.0 | 66.5 | 6.5 |
+| **mCash** | 73.0 | 73.6 | 0.6 |
+| **Islamic Wallet** | 69.0 | 64.3 | 4.7 |
+| **upay** | 68.0 | 67.2 | 0.8 |
+| **Rocket** | 66.0 | 75.6 | 9.6 |
+| **MeghnaPay** | 66.0 | 61.8 | 4.2 |
+| **LENDEN** | 61.0 | 72.4 | 11.4 |
+| **MYCash** | 61.0 | 48.5 | 12.5 |
+| **FirstCash** | 53.0 | 61.0 | 8.0 |
+| **Nagad** | 46.0 | 49.0 | 3.0 |
+| **Trust And Pay** | 38.0 | 51.8 | 13.8 |
+
+* **Top 10 Predictive Features Across the National MFS Population**:
+  1. `code_obfuscation_ratio` (Importance: 0.2200)
+  2. `api_biometric_prompt` (Importance: 0.1466)
+  3. `perm_use_biometric` (Importance: 0.1186)
+  4. `perm_use_fingerprint` (Importance: 0.1135)
+  5. `code_max_string_entropy` (Importance: 0.0958)
+  6. `api_keystore` (Importance: 0.0645)
+  7. `mf_total_permissions` (Importance: 0.0621)
+  8. `api_trust_manager` (Importance: 0.0316)
+  9. `api_weak_crypto` (Importance: 0.0294)
+  10. `api_plain_prefs` (Importance: 0.0188)
+
+* **Unsupervised Anomaly Triage (Isolation Forest)**:
+  * **Outliers Detected**: **LENDEN** (Risk: 0.562) and **MYCash** (Risk: 0.553) flagged as structural architectural anomalies due to disproportionate permission/DEX scaling.
+
 ---
 
 ## 5. Regulatory Classification Tiers
 
 The continuous **Cybersecurity Maturity Score** $S(A) \in [0, 100]$ is computed as:
-$$S(A) = \max\left(0, 100 - \sum_{i=1}^{14} w_i \cdot \mathbb{I}(s_i = \text{FAILED}) - \sum_{j=1}^{14} \min(w_j, 2) \cdot \mathbb{I}(s_j = \text{WARNING})\right)$$
+$$S(A) = \max\left(0, 100 - \sum_{j=1}^{14} w_j \cdot \mathbb{I}(s_j = \text{FAILED}) - \sum_{j=1}^{14} \min(w_j, 2) \cdot \mathbb{I}(s_j = \text{WARNING})\right)$$
 
 Applications are classified into central bank regulatory tiers:
 * **Tier 1 (Compliant)**: Score $\ge 85.0$ and $C_{\text{crit}} = 0$. Eligible for unconditional production operation.
@@ -197,10 +234,12 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 If you use this framework or empirical findings in your research, please cite:
 ```bibtex
-@article{finsec2026,
-  title   = {FinSec: Static Analysis of Android Binaries for Compliance Against Bangladesh Bank Cybersecurity Framework v1.0},
-  author  = {Anonymous Author(s)},
-  journal = {Proceedings of the International Conference on Networking, Systems and Security (NSysS)},
-  year    = {2026}
+@inproceedings{finsec2026,
+  title     = {FinSec: Static Analysis of Android Binaries for Compliance Against Bangladesh Bank Cybersecurity Framework v1.0},
+  author    = {Anonymous Author(s)},
+  booktitle = {Proceedings of the 13th International Conference on Next Generation Computing, Communication, Systems and Security (13th NSysS 2026)},
+  month     = {December},
+  year      = {2026},
+  address   = {Cox's Bazar, Bangladesh}
 }
 ```
