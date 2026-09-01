@@ -16,31 +16,31 @@ In February 2025, Bangladesh Bank issued its official **Cybersecurity Framework 
 * **Payment Service Providers (PSPs)** and **Payment System Operators (PSOs)**
 * **Scheduled Commercial Banks and NBFIs** (e.g., Islami Bank / mCash, Southeast Bank / TeleCash)
 
-This framework translates policy mandates into automated Dalvik bytecode and AndroidManifest verification rules, coupled with a **45-dimensional machine learning pipeline** tailored for bounded national application populations ($N \approx 12\text{--}25$).
+This framework translates policy mandates into automated Dalvik bytecode and AndroidManifest verification rules, coupled with a **45-dimensional machine learning pipeline** tailored for bounded national application populations ($N \approx 12 - 25$).
 
 ```mermaid
 flowchart TD
     subgraph Input["Input Tier"]
-        APK[Android MFS APK]
+        APK["Android MFS APK"]
     end
 
     subgraph StaticCore["Static Auditing Engine (Androguard)"]
-        Parser[DEX & Manifest Parser]
-        Rules[14 BB-MFS Verification Rules]
-        ScoreCalc[0-100 Maturity Index Calculator]
+        Parser["DEX and Manifest Parser"]
+        Rules["14 BB-MFS Verification Rules"]
+        ScoreCalc["0-100 Maturity Index Calculator"]
     end
 
     subgraph MLPipeline["Machine Learning Pipeline"]
-        FE[45-Dimensional Multimodal Feature Extractor]
-        LOOCV[Leave-One-Out Cross-Validation Pipeline]
-        Regressor[Ridge Score Regressor (LOOCV R²=0.4258)]
-        Anomaly[Isolation Forest Anomaly Triage]
+        FE["45-Dimensional Multimodal Feature Extractor"]
+        LOOCV["Leave-One-Out Cross-Validation Pipeline"]
+        Regressor["Ridge Score Regressor (LOOCV R2 = 0.4258)"]
+        Anomaly["Isolation Forest Anomaly Triage"]
     end
 
-    subgraph Reporting["Reporting & Audit Tier"]
-        Console[Rich Color Terminal Dashboard]
-        Markdown[BB Clause 8.1.3 Markdown Audit Report]
-        JSON[Structured CI/CD & SIEM JSON]
+    subgraph Reporting["Reporting and Audit Tier"]
+        Console["Rich Color Terminal Dashboard"]
+        Markdown["BB Clause 8.1.3 Markdown Audit Report"]
+        JSON["Structured CI/CD and SIEM JSON"]
     end
 
     APK --> Parser
@@ -125,14 +125,14 @@ mfs-check batch path/to/apk_folder/ --output results/summary.csv
 python experiments/run_real_empirical_analysis.py
 ```
 
-#### Empirical ML Pipeline Outputs:
+#### Empirical ML Pipeline Outputs
 
-* **Leave-One-Out Cross-Validation (LOOCV Ridge Regression on 12 Real Production Binaries)**:
-  * **$R^2$ Score**: `0.4258`
-  * **RMSE**: `8.17`
-  * **MAE**: `6.98`
+##### Leave-One-Out Cross-Validation (LOOCV Ridge Regression on 12 Real Production Binaries)
+* **R² Score**: `0.4258`
+* **RMSE**: `8.17`
+* **MAE**: `6.98`
 
-| Production Binary | Actual Maturity Score | LOOCV Predicted Score | Absolute Error ($|\Delta|$) |
+| Production Binary | Actual Maturity Score | LOOCV Predicted Score | Absolute Error (Abs. Diff) |
 | :--- | :---: | :---: | :---: |
 | **bKash** | 73.0 | 64.3 | 8.7 |
 | **TeleCash** | 73.0 | 66.5 | 6.5 |
@@ -147,20 +147,22 @@ python experiments/run_real_empirical_analysis.py
 | **Nagad** | 46.0 | 49.0 | 3.0 |
 | **Trust And Pay** | 38.0 | 51.8 | 13.8 |
 
-* **Top 10 Predictive Features Across the National MFS Population**:
-  1. `code_obfuscation_ratio` (Importance: 0.2200)
-  2. `api_biometric_prompt` (Importance: 0.1466)
-  3. `perm_use_biometric` (Importance: 0.1186)
-  4. `perm_use_fingerprint` (Importance: 0.1135)
-  5. `code_max_string_entropy` (Importance: 0.0958)
-  6. `api_keystore` (Importance: 0.0645)
-  7. `mf_total_permissions` (Importance: 0.0621)
-  8. `api_trust_manager` (Importance: 0.0316)
-  9. `api_weak_crypto` (Importance: 0.0294)
-  10. `api_plain_prefs` (Importance: 0.0188)
+##### Top 10 Predictive Features Across the National MFS Population
 
-* **Unsupervised Anomaly Triage (Isolation Forest)**:
-  * **Outliers Detected**: **LENDEN** (Risk: 0.562) and **MYCash** (Risk: 0.553) flagged as structural architectural anomalies due to disproportionate permission/DEX scaling.
+1. `code_obfuscation_ratio` (Importance: 0.2200)
+2. `api_biometric_prompt` (Importance: 0.1466)
+3. `perm_use_biometric` (Importance: 0.1186)
+4. `perm_use_fingerprint` (Importance: 0.1135)
+5. `code_max_string_entropy` (Importance: 0.0958)
+6. `api_keystore` (Importance: 0.0645)
+7. `mf_total_permissions` (Importance: 0.0621)
+8. `api_trust_manager` (Importance: 0.0316)
+9. `api_weak_crypto` (Importance: 0.0294)
+10. `api_plain_prefs` (Importance: 0.0188)
+
+##### Unsupervised Anomaly Triage (Isolation Forest)
+
+* **Structural Outliers**: **LENDEN** (Risk: 0.562) and **MYCash** (Risk: 0.553) flagged as structural architectural anomalies due to disproportionate permission/DEX scaling.
 
 ---
 
@@ -171,7 +173,7 @@ $$S(A) = \max\left(0, 100 - \sum_{j=1}^{14} w_j \cdot \mathbb{I}(s_j = \text{FAI
 
 Applications are classified into central bank regulatory tiers:
 * **Tier 1 (Compliant)**: Score $\ge 85.0$ and $C_{\text{crit}} = 0$. Eligible for unconditional production operation.
-* **Tier 2 (Conditional)**: Score $70.0\text{--}84.9$ and $C_{\text{crit}} = 0$. Remediation required within 90 days.
+* **Tier 2 (Conditional)**: Score $70.0 - 84.9$ and $C_{\text{crit}} = 0$. Remediation required within 90 days.
 * **Tier 3 (High Risk)**: Score $< 70.0$ or $C_{\text{crit}} \ge 1$. Triggers mandatory 72-hour regulatory notification per BB Clause 8.1.2.1.
 
 ---
